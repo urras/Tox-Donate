@@ -35,7 +35,7 @@
 				<a href="#features">Features</a>
 				<a href="https://wiki.tox.im">Wiki</a>
 				<a id="help" href="http://support.libtoxcore.so">Support</a>
-				<a id="donate" href="https://transparency.tox.im">Transparency</a>
+				<a id="donate" href="http://transparency.tox.im">Transparency</a>
 				<a href="https://www.facebook.com/toxproject"><span class="fa fa-facebook" style="font-size: 16.5pt; margin-left:20px; margin-top: 10px; float: right;"></span></a>
 				<a href="https://twitter.com/ProjectTox"><span class="fa fa-twitter" style="font-size: 16.5pt; margin-left:20px; margin-top: 10px; float: right;"></span></a>
 			</nav>
@@ -100,7 +100,7 @@
 							<input type="email" value="" style="border-radius: 5px 0px 0px 5px !important;" name="EMAIL" class="mce-email" id="mce-EMAIL" placeholder="email address" required>
 						</div>
 						<div id="clear1">
-							<button type="submit" style="width: 40px; line-height: 2.3em; margin-top: 3px; margin-left:-5px; border-radius: 0px 5px 5px 0px !important;" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="fa fa-envelope-o"></button>
+							<button type="submit" style="width: 40px; line-height: 2.3em; margin-top: 3px; margin-left:-2px; border-radius: 0px 5px 5px 0px !important;" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="fa fa-envelope-o"></button>
 						</div>
 					</form>
 				</div>
@@ -120,14 +120,9 @@
     <fieldset>
       <ul>
         
-        <li class="bitpay-donate-field">
-          <label>Amount:</label>
-          <div style="float:left;width:145px;">
-	          <select class="bitpay-donate-field-currency" name="currency" value="USD">
-	            <option selected="selected" value="USD">USD</option></select>
-	      </div>
-	            <input name="price" type="number" value="10.00" placeholder="Amount" maxlength="8" min="0.01" step="0.01" pattern="\d?\d\.\d\d"/>
-	          <button type="submit" style="width: 40px; line-height: 2.3em; margin-top: 3px; margin-left:-2px; border-radius: 0px 5px 5px 0px !important;" name="pay" class="fa fa-usd" onerror="this.onerror=null";></button>
+        <li style="list-style-type: none;" class="bitpay-donate-field">
+          <label style="margin-top: 7px;">Amount:</label>
+          <input name="price" type="number" value="10.00" placeholder="Amount" maxlength="8" min="0.01" step="0.01" pattern="\d?\d\.\d\d"/><button type="submit" style="width: 40px; line-height: 2.3em; margin-top: 3px; margin-left:-2px; border-radius: 0px 5px 5px 0px !important;" name="pay" class="fa fa-bitcoin" onerror="this.onerror=null";></button>
         </li>
         
       </ul>
