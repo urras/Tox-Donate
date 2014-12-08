@@ -10,32 +10,34 @@ i_total = 0.0 #this is a hack
 e_total = 0.0
 
 def gen_table_data(i,expense,income):
-        html = "  <tr>\r\n"
+        html = "<tr>"
         global e_total
         global i_total
         if len(expense) > i:
-            html += "    <th>%s</th>\r\n" % (expense[i]['name'])
-            html += "    <th>%s</th>\r\n" % (expense[i]['value'])
+            html += "<th>%s</th>" % (expense[i]['name'])
+            html += "<th>%s</th>" % (expense[i]['value'])
             e_total += float(expense[i]['value'])
         else:
-            html += "    <th></th>\r\n"
-            html += "    <th></th>\r\n"
-        html += "    <th></th>\r\n"
+            html += "<th></th>"
+            html += "<th></th>"
+        html += "<th></th>"
 
         if len(income) > i:
-            html += "    <th>%s</th>\r\n" % (income[i]['name'])
-            html += "    <th>%s</th>\r\n" % (income[i]['value'])
+            html += "<th>%s</th>" % (income[i]['name'])
+            html += "<th>%s</th>" % (income[i]['value'])
             i_total += float(income[i]['value'])
         else:
-            html += "    <th></th>\r\n"
-            html += "    <th></th>\r\n"
-        html += "    <th></th>\r\n"
+            html += "<th></th>"
+            html += "<th></th>"
+        html += "<th></th>"
 
-        html += "  </tr>\r\n"
+        html += "</tr>"
 
         return html
 
 def gen_table(data):
+    global i_total
+    global e_total
     inc = data["inc"]
     exp = data["exp"]
 
@@ -50,9 +52,15 @@ def gen_table(data):
 
     html += gen_table_data(0,[{"name": "Total:","value": e_total}],[{"name": "Total:","value": i_total}]) #todo: clean this up
 
+    e_total = 0.0
+    i_total = 0.0
+
     return html
 
 def reply(msg):
+    table_cache = msg['persist']
+    if table_cache == 0:
+        table_cache = {}
 
     if msg['header']['PATH'].startswith('/assets'):
         return {"code": 200, "file": msg['header']['PATH'].split('/', 1)[1]}
@@ -84,7 +92,16 @@ def reply(msg):
 
             info = {"exp": expense, "inc": income}
 
-            return {"code": 200, "file": "eval.html", "template": { "gen.table": gen_table(info), "meta.year": str(year), "meta.month" : disp_month }, "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
+            info_hash = str(month) + str(year)
+            if info_hash in table_cache:
+                table = table_cache[info_hash]
+                print "cached lookup"
+            else:
+                table = gen_table(info)
+                table_cache[info_hash] = table
+                print "real work happened"
+
+            return {"code": 200, "file": "eval.html", "template": { "gen.table": table, "meta.year": str(year), "meta.month" : disp_month }, "persist": table_cache, "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
         else:
             return {"code": 200, "msg": "no data exists for that date", "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
 
