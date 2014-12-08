@@ -3,7 +3,7 @@ import os
 
 month_lookup = {1: "January", 2: "Febuary", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
 
-expense = [{"name": "Server 1","net": "10.00","gross":"10.00"},{"name": "botnet+", "net": "50.00","gross":"10.00"},{"name": "DNS", "net": "5.00","gross":"10.00"},{"name": "SJW donations", "net": "1.00","gross":"10.00"}]
+expense = [{"name": "Server 1","net": "10.00","gross":"10.00"},{"name": "botnet+", "net": "50.00","gross":"10.00"},{"name": "DNS", "net": "5.00","gross":"10.00"},{"name": "Hookers", "net": "1.00","gross":"10.00"},{"name": "Blow", "net": "100.00","gross":"100.00"}]
 income = [{"name": "paypal","net": "10.00","gross":"10.00"},{"name": "NSA bribes","net": "500.00","gross":"11.00"}]
 
 enet_total = 0.0 #shameful in production
@@ -23,8 +23,8 @@ def gen_table_data(i,x,expense,income):
             html += "<td>%s</td>" % (expense[i]['name'])
             html += "<td></td>"
             html += "<td></td>"
-            html += "<td>%s</td>" % (expense[i]['gross'])
-            html += "<td>%s</td>" % (expense[i]['net'])
+            html += "<td>$%s</td>" % (expense[i]['gross'])
+            html += "<td>$%s</td>" % (expense[i]['net'])
             egross_total += float(expense[i]['gross'])
             enet_total += float(expense[i]['net'])
             html += "</tr>"
@@ -32,8 +32,8 @@ def gen_table_data(i,x,expense,income):
         else:
             html += '<tr class="g">'
             html += "<td>%s</td>" % (income[i2]['name'])
-            html += "<td>%s</td>" % (income[i2]['gross'])
-            html += "<td>%s</td>" % (income[i2]['net'])
+            html += "<td>$%s</td>" % (income[i2]['gross'])
+            html += "<td>$%s</td>" % (income[i2]['net'])
             html += "<td></td>"
             html += "<td></td>"
             html += "</tr>"
@@ -61,10 +61,10 @@ def gen_table(data):
 
     html += '<tr class="g t">'
     html += "<td>Total:</td>"
-    html += "<td>%s</td>" % (igross_total)
-    html += "<td>%s</td>" % (inet_total)
-    html += "<td>%s</td>" % (egross_total)
-    html += "<td>%s</td>" % (enet_total)
+    html += "<td>$%s</td>" % (igross_total)
+    html += "<td>$%s</td>" % (inet_total)
+    html += "<td>$%s</td>" % (egross_total)
+    html += "<td>$%s</td>" % (enet_total)
     html += "</tr>"
 
     enet_total = 0.0
