@@ -3,57 +3,74 @@ import os
 
 month_lookup = {1: "January", 2: "Febuary", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"}
 
-expense = [{"name": "Server 1","value": "10.00"},{"name": "botnet+", "value": "50.00"},{"name": "DNS", "value": "5.00"},{"name": "SJW donations", "value": "1.00"}]
-income = [{"name": "paypal","value": "10.00"},{"name": "NSA bribes","value": "500.00"}]
+expense = [{"name": "Server 1","net": "10.00","gross":"10.00"},{"name": "botnet+", "net": "50.00","gross":"10.00"},{"name": "DNS", "net": "5.00","gross":"10.00"},{"name": "SJW donations", "net": "1.00","gross":"10.00"}]
+income = [{"name": "paypal","net": "10.00","gross":"10.00"},{"name": "NSA bribes","net": "500.00","gross":"11.00"}]
 
-i_total = 0.0 #this is a hack
-e_total = 0.0
+enet_total = 0.0 #shameful in production
+inet_total = 0.0
+egross_total = 0.0
+igross_total = 0.0
 
-def gen_table_data(i,expense,income):
-        html = "<tr>"
-        global e_total
-        global i_total
-        if len(expense) > i:
-            html += "<th>%s</th>" % (expense[i]['name'])
-            html += "<th>%s</th>" % (expense[i]['value'])
-            e_total += float(expense[i]['value'])
+def gen_table_data(i,x,expense,income):
+        html = '<tr class="g">'
+        global egross_total
+        global enet_total
+        global igross_total
+        global inet_total
+        i2 = i - x
+        if i >= x:
+            html += '<tr class="r">'
+            html += "<td>%s</td>" % (expense[i]['name'])
+            html += "<td></td>"
+            html += "<td></td>"
+            html += "<td>%s</td>" % (expense[i]['gross'])
+            html += "<td>%s</td>" % (expense[i]['net'])
+            egross_total += float(expense[i]['gross'])
+            enet_total += float(expense[i]['net'])
+            html += "</tr>"
+
         else:
-            html += "<th></th>"
-            html += "<th></th>"
-        html += "<th></th>"
+            html += '<tr class="g">'
+            html += "<td>%s</td>" % (income[i2]['name'])
+            html += "<td>%s</td>" % (income[i2]['gross'])
+            html += "<td>%s</td>" % (income[i2]['net'])
+            html += "<td></td>"
+            html += "<td></td>"
+            html += "</tr>"
+            igross_total += float(income[i2]['gross'])
+            inet_total += float(income[i2]['net'])
 
-        if len(income) > i:
-            html += "<th>%s</th>" % (income[i]['name'])
-            html += "<th>%s</th>" % (income[i]['value'])
-            i_total += float(income[i]['value'])
-        else:
-            html += "<th></th>"
-            html += "<th></th>"
-        html += "<th></th>"
 
         html += "</tr>"
 
         return html
 
 def gen_table(data):
-    global i_total
-    global e_total
+    global egross_total
+    global enet_total
+    global igross_total
+    global inet_total
     inc = data["inc"]
     exp = data["exp"]
 
-    if len(inc) > len(exp):
-        iter = len(inc)
-    else:
-        iter = len(exp)
+    iter = len(inc) + len(exp)
 
     html = ''
-    for i in xrange(0,iter):
-        html+= gen_table_data(i,expense,income)
+    for i in xrange(0,iter - 2):
+        html+= gen_table_data(i,len(inc),expense,income)
 
-    html += gen_table_data(0,[{"name": "Total:","value": e_total}],[{"name": "Total:","value": i_total}]) #todo: clean this up
+    html += '<tr class="g t">'
+    html += "<td>Total:</td>"
+    html += "<td>%s</td>" % (igross_total)
+    html += "<td>%s</td>" % (inet_total)
+    html += "<td>%s</td>" % (egross_total)
+    html += "<td>%s</td>" % (enet_total)
+    html += "</tr>"
 
-    e_total = 0.0
-    i_total = 0.0
+    enet_total = 0.0
+    inet_total = 0.0
+    egross_total = 0.0
+    igross_total = 0.0
 
     return html
 
