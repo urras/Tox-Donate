@@ -98,7 +98,7 @@ def reply(msg):
             else:
                 access_month -= 1
 
-            return {"code": 301, "msg": "forward", "header": {"Location": "/transparency/%s%s" % (access_month,access_year), "X-Powered-By": 'OSIRIS Mach/4'}}
+            return {"code": 302, "msg": "forward", "header": {"Location": "/transparency/%s%s" % (access_month,access_year), "X-Powered-By": 'OSIRIS Mach/4'}}
 
 	if True:
             month = int(access[0:len(access) - 4])
