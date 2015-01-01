@@ -94,6 +94,7 @@ def reply(msg):
 
             if access_month == 1:
                 access_month = 12
+                access_year -= 1
             else:
                 access_month -= 1
 
