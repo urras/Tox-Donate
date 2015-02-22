@@ -126,7 +126,7 @@ def reply(msg):
                 month = 12
                 year--
             else:
-                month--;
+                month--
             
             return {"code": 303, "msg": "forward", "header": {"Location": "/transparency/%s%s" % (month,year), "X-Powered-By": 'OSIRIS Mach/4'}}
 
