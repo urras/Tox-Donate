@@ -121,7 +121,14 @@ def reply(msg):
 
             return {"code": 200, "file": "eval.html", "template": { "gen.table": table, "meta.year": str(year), "meta.month" : disp_month }, "persist": table_cache, "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
         else:
-            return {"code": 200, "msg": "no data exists for that date", "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
+            # If there is no data for this period, calculate the previous period and redirect the user there, so we can at least show them something
+            if month == 1:
+                month = 12
+                year--
+            else:
+                month--
+            
+            return {"code": 303, "msg": "forward", "header": {"Location": "/transparency/%s%s" % (month,year), "X-Powered-By": 'OSIRIS Mach/4'}}
 
     else:
         return {"code": 200, "file": "index.html", "header": {"Content-Type": 'text/html', "X-Powered-By": 'OSIRIS Mach/4'}}
